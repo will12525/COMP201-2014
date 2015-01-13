@@ -11,7 +11,7 @@ ifs.open(args[1]);
 
 if(ifs.fail())
 {
-cout<<"YOUR A FAILURE and you spelled your wrong";
+cout<<"FAILED";
 ifs.close();
 exit(1);
 }
