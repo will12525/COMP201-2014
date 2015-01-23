@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <vector>
 using namespace std;
 
 //this is an enumeration
@@ -24,14 +24,36 @@ void printCard(Card card)
 {
 	cout<<rankName[card.rank]<<" of " << suitName[card.suit]<<endl;
 }
+vector<Card> makeDeck()
+{
+	vector<Card>holder;
+	
+	for(int x=0;x<4;x++)
+	{
+		for(int y=0;y<13;y++)
+		{
+			Card card;
+			card.suit=Suit(x);
+			card.rank=Rank(y);
+			holder.push_back(card);
+		}
+	}
+	return holder;
+}
 
 int main()
 {
 	Card card;
 	
-	card.suit = SPADES;
-	card.rank = ACE;
+	//card.suit = SPADES;
+	//card.rank = ACE;
+	vector<Card> deck = makeDeck();
+	for(int i=0;i<deck.size();i++)
+	{
+		printCard(deck[i]);
+		cout<<endl;
+	}
 	
-	printCard(card);
+	
 	return 0;
 }
