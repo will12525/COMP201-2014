@@ -14,7 +14,7 @@ int main(int variable, char* args[])
 
 	if(ifs.fail())
 	{
-		cout<<"FAILED";
+		cout<<"FAILED, Please provide a text document";
 		ifs.close();
 		exit(1);
 	}
@@ -25,6 +25,11 @@ int main(int variable, char* args[])
 	{
 		if(number=="+")
 		{
+			if(numbers.size()<2)
+			{
+				cout<<"Not enough in string"<<endl;
+				return 0;
+			}
 			int x1 =numbers.back();
 			numbers.pop_back();
 			int x2 = numbers.back();
@@ -38,6 +43,11 @@ int main(int variable, char* args[])
 		}
 		else if(number=="-")
 		{
+			if(numbers.size()<2)
+			{
+				cout<<"Not enough in string"<<endl;
+				return 0;
+			}
 			int x1 =numbers.back();
 			numbers.pop_back();
 			int x2 = numbers.back();
@@ -51,6 +61,11 @@ int main(int variable, char* args[])
 		}
 		else if(number=="*")
 		{
+			if(numbers.size()<2)
+			{
+				cout<<"Not enough in string"<<endl;
+				return 0;
+			}
 			int x1 =numbers.back();
 			numbers.pop_back();
 			int x2 = numbers.back();
@@ -64,6 +79,11 @@ int main(int variable, char* args[])
 		}
 		else if(number=="/")
 		{
+			if(numbers.size()<2)
+			{
+				cout<<"Not enough in string"<<endl;
+				return 0;
+			}
 			int x1 =numbers.back();
 			numbers.pop_back();
 			int x2 = numbers.back();

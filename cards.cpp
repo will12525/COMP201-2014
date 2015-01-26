@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+//for randomness
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 using namespace std;
 
 //this is an enumeration
