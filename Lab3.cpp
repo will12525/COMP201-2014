@@ -105,7 +105,7 @@ Model::Model(int w, int h) {
         }
     }
 	state=FIRST;
-	ofstream stream;
+	/*ofstream stream;
 	stream.open("cheatcode.txt");
 	
 	for(int y=0;y<height;y++)
@@ -116,7 +116,7 @@ Model::Model(int w, int h) {
 		}
 		stream<<endl;
 	}
-	stream.close();
+	stream.close();*/
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
