@@ -26,7 +26,7 @@ Model::Model(int w, int h) {
         for (int j = 0; j < width; j++) {
             grid[i][j] = 'a';
             // Everything's invisible at first
-            visible[i][j] = '*';
+            visible[i][j] = '_';
         }
     }
 }
@@ -52,6 +52,7 @@ bool Model::matched(int row, int column) {
 void Model::flip(int row, int column) {
     // If the row and column are not valid, break out and don't do anything
     if (!valid(row, column)) { return; }
+    visible[row][column] = grid[row][column];
 }
 // TODO: If everything is visible, then it's game over
 bool Model::gameOver() {

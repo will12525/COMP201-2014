@@ -1,14 +1,14 @@
 CC=g++
-CFLAGS=-c -Wall
-LDFLAGS=
-SOURCES=main.cpp model.cpp view.cpp controller.cpp
+CFLAGS=-c -g -Wall -Dmain=SDL_main
+LDFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -w -Wl,-subsystem,windows
+SOURCES=model.cpp view.cpp controller.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=lab4.exe
 
 all: $(SOURCES) $(EXECUTABLE)
-    
+
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
