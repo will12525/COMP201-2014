@@ -44,4 +44,6 @@ private:
     int lastColumn;
     State state;
 };
+
+
 #endif

@@ -1,16 +1,17 @@
-all: lab4
+CC=g++
+CFLAGS=-c -Wall
+LDFLAGS=
+SOURCES=main.cpp model.cpp view.cpp controller.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=lab4.exe
 
-lab4: main.o model.o view.o controller.o
-	g++ main.o model.o view.o controller.o -o lab4.exe
+all: $(SOURCES) $(EXECUTABLE)
+    
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-main.o:
-	g++ -c main.cpp
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
-model.o:
-	g++ -c model.cpp
-
-view.o:
-	g++ -c view.cpp
-
-controller.o:
-	g++ -c controller.cpp
+clean:
+	rm *.o $(EXECUTABLE)
