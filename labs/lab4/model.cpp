@@ -47,6 +47,7 @@ Model::Model(int w, int h) {
             grid[otheri][otherj] = letter;
         }
     }
+	state = FIRST;
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -61,6 +62,10 @@ Model::~Model() {
 // That is, is the row within the height, and is the column within the width?
 // Return whether it is or isn't.
 bool Model::valid(int row, int column) {
+	if(row<0||row>7||column<0||column>7||visible[row][column]!='_')
+	{
+		return false;
+	}
     return true;
 }
 bool Model::matched(int row, int column) {
@@ -70,7 +75,37 @@ bool Model::matched(int row, int column) {
 void Model::flip(int row, int column) {
     // If the row and column are not valid, break out and don't do anything
     if (!valid(row, column)) { return; }
-    visible[row][column] = grid[row][column];
+   // visible[row][column] = grid[row][column];
+	
+	
+	if(state==NO_MATCH)
+	{
+		visible[lastRow][lastColumn]='_';
+		visible[lastRow2][lastColumn2]='_';
+		state=FIRST;
+	}
+	
+	if(state==FIRST)
+	{
+		visible[row][column]=grid[row][column];
+		lastRow=row;
+		lastColumn=column;
+		state=SECOND;
+	}
+	else if(state==SECOND)
+	{
+		visible[row][column]=grid[row][column];
+		state=FIRST;
+	}
+	
+	if(visible[row][column]!=visible[lastRow][lastColumn])
+	{	
+		lastRow2=row;
+		lastColumn2=column;
+		state=NO_MATCH;
+	}
+
+	
 }
 // If everything is visible, then it's game over
 bool Model::gameOver() {

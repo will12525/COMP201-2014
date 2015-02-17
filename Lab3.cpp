@@ -43,6 +43,8 @@ private:
     // What'd we flip last?
     int lastRow;
     int lastColumn;
+	int lastRow2;
+    int lastColumn2;
     State state;
 };
 
@@ -105,7 +107,7 @@ Model::Model(int w, int h) {
         }
     }
 	state=FIRST;
-	/*ofstream stream;
+	ofstream stream;
 	stream.open("cheatcode.txt");
 	
 	for(int y=0;y<height;y++)
@@ -116,7 +118,7 @@ Model::Model(int w, int h) {
 		}
 		stream<<endl;
 	}
-	stream.close();*/
+	stream.close();
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -151,6 +153,13 @@ void Model::flip(int row, int column) {
     // If the row and column are not valid, break out and don't do anything
     if (!valid(row, column)) { return; }
     
+	if(state==NO_MATCH)
+	{
+		visible[lastRow][lastColumn]='*';
+		visible[lastRow2][lastColumn2]='*';
+		state=FIRST;
+	}
+	
 	if(state==FIRST)
 	{
 		visible[row][column]=grid[row][column];
@@ -165,16 +174,10 @@ void Model::flip(int row, int column) {
 	}
 	
 	if(visible[row][column]!=visible[lastRow][lastColumn])
-	{
-		cout<<visible[lastRow][lastColumn]<<" does not match "<<visible[row][column]<<endl;
-		visible[lastRow][lastColumn]='*';
-		visible[row][column]='*';
-		state=FIRST;
-	}
-	else if((visible[row][column]==visible[lastRow][lastColumn])&&state!=SECOND)
-	{
-		cout<<"You got a match!"<<endl;
-		state=FIRST;
+	{	
+		lastRow2=row;
+		lastColumn2=column;
+		state=NO_MATCH;
 	}
 	
 	
@@ -186,8 +189,7 @@ void Model::flip(int row, int column) {
         // Otherwise, make the last cell invisible (set it to *)
     // Make the current cell visible
 	
-	lastRow=row;
-	lastColumn=column;
+	
 }
 // If everything is visible, then it's game over
 bool Model::gameOver() {

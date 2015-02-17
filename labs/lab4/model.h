@@ -3,7 +3,7 @@
 #ifndef _MODEL_H
 #define _MODEL_H
 
-enum State { INIT, FIRST, NO_MATCH };
+enum State { INIT, FIRST, SECOND, NO_MATCH };
 
 // To clear the screen, look up ANSI escape codes
 // Concentration game model
@@ -41,8 +41,10 @@ private:
     // What's the height?
     int height;
     // What'd we flip last?
-    std::vector<int> lastRow;
-    std::vector<int> lastColumn;
+    int lastRow;
+    int lastColumn;
+	int lastRow2;
+	int lastColumn2;
     State state;
 };
 
