@@ -13,63 +13,16 @@ class Model {
 public:
     // Constructor (instantiates object)
     // Initialize a grid of letters randomly
-	// Constructor initializes the object
-    Model(int w, int h)
-	{
-		width = w;
-		height = h;
-		lastRow = -1;
-		lastColumn = -1;
-		state = FIRST;
-		grid = new char*[h];
-		visible = new char*[h];
-		
-		char letters[] ={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-		
-		for (int i = 0; i < height; i++) 
-		{
-			grid[i] = new char[w];
-			visible[i] = new char[w];
-		}
-		srand(time(0)); //do stuff with rand() % 26
-		// TODO: make this random-ish
-		for (int i = 0; i < height; i++) 
-		{
-			for (int j = 0; j < width; j++) 
-			{
-				grid[i][j] = 'a';//this needs to be random
-				visible[i][j] = '*';
-			}
-		}
-	}
+    Model(int w, int h);
     // Destructor deletes all dynamically allocated stuff
-	// Destructor deletes dynamically allocated memory
-    ~Model()
-	{
-		for (int i = 0; i < height; i++) 
-		{
-			delete grid[i];
-			delete visible[i];
-		}
-		delete grid;
-		delete visible;
-	}
+    ~Model();
     // Methods (member functions)
     // Return the width
-    int getWidth()
-	{
-		return width;
-	}
+    int getWidth();
     // Return the height
-    int getHeight()
-	{
-		return height;
-	}
+    int getHeight();
     // Return visible stuff (invisible stuff is shown with character *)
-    char get(int row, int column)
-	{
-		return visible[row][col];
-	}
+    char get(int row, int column);
     // Flip this row/column
     void flip(int row, int column);
     // Is the game over?
@@ -98,24 +51,7 @@ private:
 class View {
 public:
     // Print out the visible stuff in the grid
-	// Show the model, one cell at a time
-    void show(Model * model)
-	{
-		for (int j = 0; j < model->getWidth(); j++) 
-		{
-			cout << "\t" << j;
-		}
-		cout << endl;
-		for (int i = 0; i < model->getHeight(); i++) 
-		{
-			cout << i;
-			for (int j = 0; j < model->getWidth(); j++) 
-			{
-				cout << "\t" << model->get(i, j);
-			}
-			cout << endl;
-		}
-    }
+    void show(Model * model);
 };
 
 // Handle input
@@ -125,41 +61,16 @@ public:
         model = new Model(8,8);
         view = new View;
     }
-
-	~Controller()
-	{
-		delete model;
-		delete view;
-	}
-
     ~Controller() {
         delete model;
         delete view;
     }
-
     // Event loop
-	// Show the board
-	// Read in coordinates
-	// Until we're done
-    void loop()
-	{
-		int row, col;
-		while (!model->gameOver()) 
-		{
-			view->show(model);
-			cout << "Enter row:    ";
-			cin >> row;
-			cout << "Enter column: ";
-			cin >> col;
-			model->flip(row, col);
-		}
-		cout<<"You win!\n";
-	}
+    void loop();
 private:
     Model * model;
     View * view;
 };
-
 
 // Constructor initializes the object
 Model::Model(int w, int h) {
@@ -196,7 +107,6 @@ Model::~Model() {
     delete grid;
     delete visible;
 }
-
 // TODO: Is the row/column valid?
 // That is, is the row within the height, and is the column within the width?
 // Return whether it is or isn't.
@@ -224,7 +134,6 @@ bool Model::gameOver() {
     // Hint: Loop through the grid and see if any element is not visible
     return false;
 }
-
 int Model::getWidth() {
     return width;
 }
