@@ -7,11 +7,8 @@ EXECUTABLE=lab4.exe
 
 all: $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
-
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+$(EXECUTABLE):
+	$(CC) -g $(SOURCES) $(LDFLAGS) -o $@
 
 clean:
-	rm *.o $(EXECUTABLE)
+	rm $(EXECUTABLE)

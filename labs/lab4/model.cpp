@@ -18,15 +18,35 @@ Model::Model(int w, int h) {
         grid[i] = new char[width];
         visible[i] = new char[width];
     }
-    srand(time(0));
-    // TODO: make this random-ish
-    // Look at asciitable.com and do some stuff with rand() % number
-    // Hint: insert characters in order, then shuffle later in a separate loop
+    char letter = 'A';
+    // Guarantee pairs of characters in the grid
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            grid[i][j] = 'a';
+            grid[i][j] = letter;
             // Everything's invisible at first
             visible[i][j] = '_';
+            // Every other iteration...
+            if (j % 2 == 1) {
+                letter++;
+                if (letter > 'Z') {
+                    letter = 'A';
+                }
+            }
+        }
+    }
+    // Seed random number generator with time
+    srand(time(0));
+    // Randomize
+    int otheri, otherj;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            // Pick a random spot in the grid
+            otheri = rand() % height;
+            otherj = rand() % width;
+            // Swap grid[i][j] with grid[otheri][otherj]
+            letter = grid[i][j];
+            grid[i][j] = grid[otheri][otherj];
+            grid[otheri][otherj] = letter;
         }
     }
 }
@@ -54,11 +74,34 @@ void Model::flip(int row, int column) {
     if (!valid(row, column)) { return; }
     visible[row][column] = grid[row][column];
 }
-// TODO: If everything is visible, then it's game over
+// If everything is visible, then it's game over
 bool Model::gameOver() {
-    // Hint: assume the game is over, unless it isn't
-    // Hint: Loop through the grid and see if any element is not visible
-    return false;
+    // Assume the game is over
+    bool isOver = true;
+    // Loop through the grid and see if any element is not visible
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (visible[i][j] == '_') {
+                isOver = false;
+            }
+        }
+    }
+    
+    if (isOver) {
+        // Set a nice game over message
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                visible[i][j] = '_';
+            }
+        }
+        visible[2][3] = 'Y';
+        visible[2][4] = 'O';
+        visible[2][5] = 'U';
+        visible[4][3] = 'W';
+        visible[4][4] = 'I';
+        visible[4][5] = 'N';
+    }
+    return isOver;
 }
 int Model::getWidth() {
     return width;

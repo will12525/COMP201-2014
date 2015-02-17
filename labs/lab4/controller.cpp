@@ -1,5 +1,4 @@
 #include "controller.h"
-#include <iostream>
 
 using namespace std;
 
@@ -13,6 +12,30 @@ Controller::~Controller() {
     delete view;
 }
 
+/**
+References:
+https://wiki.libsdl.org/SDL_PollEvent
+https://wiki.libsdl.org/SDL_Event
+*/
+void Controller::loop() {
+    SDL_Event e;
+    while(!model->gameOver()) {
+        view->show(model);
+        if (SDL_PollEvent(&e) != 0) {
+            switch (e.type) {
+            case SDL_QUIT:
+                return;
+            case SDL_MOUSEBUTTONDOWN:
+                model->flip(e.button.y / 80, e.button.x / 80);
+                break;
+            }
+        }
+    }
+    view->show(model);
+    SDL_Delay(3000);
+}
+
+/*
 // Show the board
 // Read in coordinates
 // Until we're done
@@ -28,3 +51,4 @@ void Controller::loop() {
     }
     cout << "Hooray, you win!" << endl;
 }
+*/

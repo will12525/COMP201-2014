@@ -1,5 +1,4 @@
 #include "view.h"
-// #include <iostream>
 
 using namespace std;
 
@@ -30,9 +29,14 @@ View::View(string title, int width, int height) {
         path[7] = letter;
         letters[letter] = load(path);
     }
+    path[7] = '_';
+    letters['_'] = load(path);
 }
 
 View::~View() {
+    for (std::map<char,SDL_Surface *>::iterator it=letters.begin(); it!=letters.end(); it++) {
+        SDL_FreeSurface(it->second);
+    }
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
@@ -61,18 +65,20 @@ void View::show(Model * model) {
 
     SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format,
         0x03, 0x3A, 0x01));
+
     SDL_Rect dest;
+    char letter;
     for (int i = 0; i < model->getHeight(); i++) {
         for (int j = 0; j < model->getWidth(); j++) {
             dest.x = j * 80;
             dest.y = i * 80;
+            letter = model->get(i, j);
             
-            SDL_BlitSurface( letters[model->get(i, j)], NULL, screen, &dest );
+            SDL_BlitSurface( letters[letter], NULL, screen, &dest );
         }
     }
 
     SDL_UpdateWindowSurface(window);
-    SDL_Delay(2000);
 }
 
 /*
