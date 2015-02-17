@@ -1,3 +1,4 @@
+#include <vector>
 
 #ifndef _MODEL_H
 #define _MODEL_H
@@ -40,8 +41,8 @@ private:
     // What's the height?
     int height;
     // What'd we flip last?
-    int lastRow;
-    int lastColumn;
+    std::vector<int> lastRow;
+    std::vector<int> lastColumn;
     State state;
 };
 

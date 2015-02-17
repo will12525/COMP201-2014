@@ -8,8 +8,6 @@ using namespace std;
 Model::Model(int w, int h) {
     width = w;
     height = h;
-    lastRow = -1;
-    lastColumn = -1;
     state = INIT;
     grid = new char*[height];
     visible = new char*[height];
